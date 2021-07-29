@@ -1,0 +1,90 @@
+<main>
+
+  <section class='py-5 details' id='trip-details-page'>
+    {{#with car}}
+
+      <div class='container'>
+        <div class='destination'>
+          <div>
+            <span class='icon'><i class='fas fa-map-marked-alt'></i></span>
+            <h5>
+              from
+              <span>{{startPoint}}</span>
+              to
+              <span>{{endPoint}}</span>
+            </h5>
+          </div>
+          <div>
+            <span class='icon'><i class='fas fa-calendar-alt'></i></span>
+            <h5> <span>{{date}}</span> at <span>{{time}}</span> </h5>
+          </div>
+        </div>
+        <p class='line'></p>
+        <div class='buddies-info'>
+
+          <i class='fas fa-users buddies'></i>
+          <h5>Shared trip Buddies</h5>
+          <div>
+
+            {{#each buddies}}
+              <p>{{email}}</p>
+              {{#unless @last}},
+              {{/unless}}
+
+            {{else}}
+              <p>there are no buddies yet...</p>
+            {{/each}}
+          </div>
+
+          <h5>Driver: <span>{{driver}}</span> </h5>
+
+        </div>
+        <p class='line'></p>
+        <h5 class='brand'>Car Brand: <span class='lead'>{{brand}}</span></h5>
+        <div class='trip-info'>
+          <div>
+            <img class='img-fluid rounded' src='{{imageUrl}}' alt='car-image' />
+          </div>
+          <div class='trip-desc'>
+            <h5>Information about the trip</h5>
+            <textarea class='lead' disabled>{{description}}</textarea>
+            <h5>Price: <span class='lead'>{{price}}</span> BGN</h5>
+
+            <!-- if there are no logged in user do not show div with class actions  -->
+            {{#if hasUser}}
+              <div class='actions'>
+                {{#if isAuthor}}
+                  <!-- Only for logged user and creator to this trip -->
+                  <a href='/cars/delete/{{_id}}' class='btn btn-danger'>Delete
+                    this trip</a>
+                  <a href='/cars/edit/{{_id}}' class='btn btn-warning'>Edit this
+                    trip</a>
+                {{else}}
+                  <!-- logged in user with available seats -->
+                  {{#if hasSeats}}
+                    {{#if joined}}
+                      <span class='btn btn-info'>Already joined. Don't be late!</span>
+
+                    {{else}}
+                      <a href='/cars/join/{{_id}}' class='btn btn-join'>Join
+                        now, [
+                        {{seats}}] seats left!</a>
+                    {{/if}}
+
+                  {{else}}
+                    <span class='btn btn-secondary'>No seats available! [{{seats}}]</span>
+                  {{/if}}
+                {{/if}}
+                <!-- logged in user and has already joined the trip  -->
+
+                <!-- logged in user with no available seats -->
+
+              </div>
+            {{/if}}
+
+          </div>
+        </div>
+      </div>
+    {{/with}}
+  </section>
+</main>
